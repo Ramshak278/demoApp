@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from ..models import Book
 from .serializers import BookSerializer, CreateBookSerializer, UpdateBookSerializer
 
@@ -47,3 +48,26 @@ class BookUpdateView(generics.UpdateAPIView):
         self.perform_update(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class BookByAuthorView(generics.ListAPIView):
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        author_name = self.kwargs['author_name']
+        return Book.objects.filter(author__icontains=author_name)
+
+class BookByTitleView(generics.ListAPIView):
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        book_name = self.kwargs['book_name']
+        return Book.objects.filter(title__icontains=book_name)
+
+class BookByUserIdView(generics.ListAPIView):
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Book.objects.filter(user_id=user_id)
