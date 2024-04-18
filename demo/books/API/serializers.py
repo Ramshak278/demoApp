@@ -6,13 +6,14 @@ from ..models import Book
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['id', 'title', 'author', 'publication_date', 'price', 'genre', 'isbn', 'user']
+        fields = ['id', 'title', 'author', 'publication_date', 'price', 'genre', 'isbn', 'user','image']
+
 
 
 class CreateBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'publication_date', 'price', 'genre', 'isbn', 'user']
+        fields = ['title', 'author', 'publication_date', 'price', 'genre', 'isbn', 'user','image']
 
     def create(self, validated_data):
         return Book.objects.create(**validated_data)
@@ -21,7 +22,7 @@ class CreateBookSerializer(serializers.ModelSerializer):
 class UpdateBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'publication_date', 'price', 'genre', 'isbn', 'user']
+        fields = ['title', 'author', 'publication_date', 'price', 'genre', 'isbn', 'user','image']
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)

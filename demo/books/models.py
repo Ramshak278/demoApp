@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.db import models
 from demoapp.models import User
+from django_uuid_upload import upload_to_uuid
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
@@ -13,7 +14,7 @@ class Book(models.Model):
     isDeleted = models.BooleanField(default=False)
     creation_time = models.DateTimeField(default=timezone.now)
     deletion_time = models.DateTimeField(default=timezone.now)
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image = models.ImageField(upload_to=upload_to_uuid('images'), null=True, blank=True)
 
     def __str__(self):
         return self.title

@@ -1,5 +1,5 @@
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from ..models import Book
@@ -8,7 +8,7 @@ from .serializers import BookSerializer, CreateBookSerializer, UpdateBookSeriali
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -17,7 +17,7 @@ class BookListView(generics.ListAPIView):
 
 class BookCreateView(generics.CreateAPIView):
     serializer_class = CreateBookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -28,7 +28,7 @@ class BookCreateView(generics.CreateAPIView):
 class BookRetrieveView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -38,7 +38,8 @@ class BookRetrieveView(generics.RetrieveAPIView):
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = UpdateBookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    http_method_names = ['get', 'patch', 'put', 'head', 'options']
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -50,7 +51,7 @@ class BookUpdateView(generics.UpdateAPIView):
 
 class BookByAuthorView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         author_name = self.kwargs['author_name']
@@ -58,15 +59,15 @@ class BookByAuthorView(generics.ListAPIView):
 
 class BookByTitleView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
-        book_name = self.kwargs['book_name']
-        return Book.objects.filter(title__icontains=book_name)
+        title = self.kwargs['title']
+        return Book.objects.filter(title__icontains=title)
 
 class BookByUserIdView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']

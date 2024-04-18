@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -23,7 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-l(v)hz)z54huy)xvqf9e^r4v5uq#o7mv#z6%b8+(4j1a8773mv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_URL = '/images/'
+
 
 ALLOWED_HOSTS = ['*']
 
