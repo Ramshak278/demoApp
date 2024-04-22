@@ -16,7 +16,8 @@ class CreateBookSerializer(serializers.ModelSerializer):
         fields = ['title', 'author', 'publication_date', 'price', 'genre', 'isbn', 'user','image']
 
     def create(self, validated_data):
-        return Book.objects.create(**validated_data)
+        user = self.context['request'].user
+        return Book.objects.create(user=user,**validated_data)
 
 
 class UpdateBookSerializer(serializers.ModelSerializer):

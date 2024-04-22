@@ -8,7 +8,7 @@ from .serializers import BookSerializer, CreateBookSerializer, UpdateBookSeriali
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -17,7 +17,7 @@ class BookListView(generics.ListAPIView):
 
 class BookCreateView(generics.CreateAPIView):
     serializer_class = CreateBookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -28,7 +28,7 @@ class BookCreateView(generics.CreateAPIView):
 class BookRetrieveView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -38,7 +38,7 @@ class BookRetrieveView(generics.RetrieveAPIView):
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = UpdateBookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     http_method_names = ['get', 'patch', 'put', 'head', 'options']
 
     def update(self, request, *args, **kwargs):
@@ -51,7 +51,7 @@ class BookUpdateView(generics.UpdateAPIView):
 
 class BookByAuthorView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         author_name = self.kwargs['author_name']
@@ -59,16 +59,24 @@ class BookByAuthorView(generics.ListAPIView):
 
 class BookByTitleView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        title = self.kwargs['title']
-        return Book.objects.filter(title__icontains=title)
+        book_name = self.kwargs['book_name']
+        return Book.objects.filter(title__icontains=book_name)
 
 class BookByUserIdView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        return Book.objects.filter(user_id=user_id)
+        return Book.objects.filter(user=user_id)
+
+class BookByBookIdView(generics.ListAPIView):
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        book_id = self.kwargs['book_id']
+        return Book.objects.filter(id=book_id)
