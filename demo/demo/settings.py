@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'demoapp',
-    'books'
+    'books',
+    'author',
+    'borrow'
 ]
 
 MIDDLEWARE = [

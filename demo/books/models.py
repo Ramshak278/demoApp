@@ -16,5 +16,7 @@ class Book(models.Model):
     deletion_time = models.DateTimeField(default=timezone.now)
     image = models.ImageField(upload_to=upload_to_uuid('images'), null=True, blank=True)
 
+
+
     def __str__(self):
         return self.title
