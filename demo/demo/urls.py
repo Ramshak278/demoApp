@@ -24,7 +24,8 @@ urlpatterns = [
     path('auth/',include('demoapp.urls')),
     path('book/',include('books.urls')),
     path('author/',include('author.urls')),
-    path('borrow/',include('borrow.urls'))
+    path('borrow/',include('borrow.urls')),
+    path('conversations/', include('Chat.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
