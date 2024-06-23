@@ -6,6 +6,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from ..models import User
 
 
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
@@ -52,4 +53,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['Id', "email","creation_time","deletion_time","isDeleted","firstName","lastName" ]
         extra_kwargs = {'password': {'write_only': True}}
+
+
 

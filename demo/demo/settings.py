@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'demoapp',
     'books',
     'author',
-    'borrow'
+    'borrow',
+    'Chat'
+
 ]
 
 MIDDLEWARE = [
@@ -108,6 +110,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'demo.wsgi.application'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
