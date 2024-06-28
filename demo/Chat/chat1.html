@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>chat1</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <h1 style="text-align:center;">User Notifications Socket Testing</h1>
+    <h2 style="text-align:center;">Login User 1</h2>
+    <div id="messages"></div>
+    <button  onclick="myFunction()">send</button>
+<script type="text/javascript">
+    let roomName = 1;
+    function updateWebSocketUrl() {
+        let url = `ws://localhost:8000/ws/chat/${roomName}/`;
+        chatSocket.close(); // Close the current WebSocket connection
+        chatSocket = new WebSocket(url); // Create a new WebSocket connection
+    }
+    // Initialize the WebSocket connection
+      let url = `ws://localhost:8000/ws/chat/${roomName}/`;
+      let chatSocket = new WebSocket(url);
+    chatSocket.onmessage = function (e)
+    {
+        let data = JSON.parse(e.data);
+        console.log('Data:', data);
+
+
+    }
+    let form = document.getElementById('form');
+    function myFunction()
+    {
+
+        let message = "1234";
+        chatSocket.send
+        (JSON.stringify
+        (
+        {
+            'message': message,
+            'roomName': 2
+        }));
+
+    };
+</script>
+</body>
+</html>
