@@ -37,7 +37,7 @@ def contact_us(request):
     ) as connection:
         subject = 'request.POST.get("email")'
         email_from = settings.EMAIL_HOST_USER
-        recipient_list = '[request.POST.get("email"), ]'
+        recipient_list = [request.POST.get("email"), ]
         message = 'request.POST.get("message")'
         EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
     # send_mail('email', 'hello', 'contact@confiatech.com', ["ramshak278@gmail.com"]

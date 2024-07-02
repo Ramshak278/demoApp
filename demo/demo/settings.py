@@ -216,3 +216,22 @@ EMAIL_HOST = 'mail.confiatech.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'contact@confiatech.com'
 EMAIL_HOST_PASSWORD = 'Confia@123'
+
+
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Karachi'
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'send-email-every-10-minutes': {
+        'task': 'myapp.tasks.send_email_task',
+        'schedule': crontab(minute='*/10'),  # Every 10 minutes
+    },
+}
